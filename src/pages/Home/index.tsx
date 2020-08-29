@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { Title } from './styles';
+import { Container, Title } from './styles';
 
 const Home: React.FC = () => {
-  return <Title>Feito para quem faz</Title>;
+  return (
+    <Container>
+      <Title>Feito para quem faz</Title>
+    </Container>
+  );
 };
 
 export default Home;
