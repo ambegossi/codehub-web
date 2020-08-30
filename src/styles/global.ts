@@ -17,6 +17,10 @@ export default createGlobalStyle`
     font: 16px 'Nunito Sans', sans-serif;
   }
 
+  p, strong, span, h1, h2 {
+    color: #131315;
+  }
+
   #root {
     max-width: 1260px;
     margin: 0 auto;

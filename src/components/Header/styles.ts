@@ -5,7 +5,7 @@ export const HeaderWrapper = styled.header`
 `;
 
 export const HeaderContent = styled.div`
-  max-width: 960px;
+  max-width: 1060px;
   margin: 0 auto;
   display: flex;
 
