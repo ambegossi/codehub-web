@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import api from '../../services/api';
 
 import DropdownMenu from '../../components/DropdownMenu';
+import AddEventModal from '../../components/AddEventModal';
 
 import {
-  Container,
   Intro,
   Title,
   SubTitle,
@@ -18,12 +19,10 @@ import {
   EventContent,
   EventDate,
   EventMonth,
-  EventDay,
   EventDescription,
 } from './styles';
 
-interface Event {
-  id: string;
+export interface Event {
   title: string;
   description: string;
   datetime: string;
@@ -32,6 +31,7 @@ interface Event {
   category: string;
   street: string;
   street_number: string;
+  neighborhood: string;
   state: string;
   city: string;
   zip_code: string;
@@ -43,26 +43,47 @@ interface Event {
 
 const Home: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [category, setCategory] = useState<string>('Todas');
+  const [category, setCategory] = useState<string>();
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+
+  function openModal(): void {
+    setIsOpen(true);
+  }
+
+  function closeModal(): void {
+    setIsOpen(false);
+  }
+
+  function handleAddEvent(event: Event): void {
+    const newEvent = event;
+    newEvent.day = format(new Date(event.datetime), 'd');
+    newEvent.month = format(new Date(event.datetime), 'MMM', {
+      locale: ptBR,
+    });
+    closeModal();
+    setEvents(oldEvents => [...oldEvents, event]);
+  }
 
   useEffect(() => {
     api.get<Event[]>('events').then(response => {
       const data = response.data.map(event => ({
         ...event,
         day: format(new Date(event.datetime), 'd'),
-        month: format(new Date(event.datetime), 'MMM'),
+        month: format(new Date(event.datetime), 'MMM', {
+          locale: ptBR,
+        }),
       }));
 
       setEvents(data);
     });
-  });
+  }, []);
 
-  function handleCategoryFilter(category: string): void {
-    setCategory(category);
+  function handleChangeCategory(selectedCategory: string): void {
+    setCategory(selectedCategory);
   }
 
   return (
-    <Container>
+    <>
       <Intro>
         <Title>Feito para quem faz</Title>
         <SubTitle>
@@ -70,14 +91,24 @@ const Home: React.FC = () => {
         </SubTitle>
       </Intro>
 
+      <AddEventModal
+        handleAddEvent={handleAddEvent}
+        closeModal={closeModal}
+        onRequestClose={closeModal}
+        modalIsOpen={modalIsOpen}
+      />
+
       <ContentWrapper>
         <CategoryRow>
           <h2>Próximos Eventos</h2>
           <ButtonsWrapper>
-            <AddEventButton type="submit">+ Evento</AddEventButton>
+            <AddEventButton onClick={openModal} type="submit">
+              + Evento
+            </AddEventButton>
             <DropdownMenu
-              handleCategoryFilter={handleCategoryFilter}
-              items={['Todas', 'Presencial', 'Online']}
+              name={category || 'Categorias'}
+              onChangeItem={handleChangeCategory}
+              items={['Todos', 'Presencial', 'Online']}
             />
           </ButtonsWrapper>
         </CategoryRow>
@@ -85,13 +116,15 @@ const Home: React.FC = () => {
         <Events>
           {events.map(
             event =>
-              (event.category === category || category === 'Todas') && (
+              (event.category === category ||
+                category === 'Todos' ||
+                !category) && (
                 <Event key={event.title}>
                   <img src={event.image} alt="Evento" />
                   <EventContent>
                     <EventDate>
                       <EventMonth>{event.month}</EventMonth>
-                      <EventDay>{event.day}</EventDay>
+                      <strong>{event.day}</strong>
                     </EventDate>
                     <EventDescription>
                       <strong>{event.title}</strong>
@@ -103,7 +136,7 @@ const Home: React.FC = () => {
           )}
         </Events>
       </ContentWrapper>
-    </Container>
+    </>
   );
 };
 

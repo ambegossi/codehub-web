@@ -4,7 +4,9 @@ import Button from '../../components/Button';
 
 import bgIntroImg from '../../assets/bg-intro.jpg';
 
-export const Container = styled.div``;
+interface EventProps {
+  key: string;
+}
 
 export const Intro = styled.div`
   background: url(${bgIntroImg}) no-repeat center;
@@ -48,6 +50,7 @@ export const ButtonsWrapper = styled.div`
 export const AddEventButton = styled(Button)`
   color: #131315;
   margin-right: 20px;
+  width: 130px;
 
   &:hover {
     background-color: #7848f4;
@@ -61,10 +64,6 @@ export const Events = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
-
-interface EventProps {
-  key: string;
-}
 
 export const Event = styled.div<EventProps>`
   width: 330px;
@@ -107,8 +106,6 @@ export const EventMonth = styled.strong`
   color: #7848f4;
   text-transform: uppercase;
 `;
-
-export const EventDay = styled.strong``;
 
 export const EventDescription = styled.div`
   display: flex;
