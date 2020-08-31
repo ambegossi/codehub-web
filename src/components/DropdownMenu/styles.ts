@@ -41,6 +41,7 @@ export const Item = styled.div`
 
   button {
     border: none;
+    background-color: #efe6ff;
     color: #131315;
     text-decoration: none;
 

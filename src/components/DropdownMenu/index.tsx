@@ -4,13 +4,16 @@ import { FiChevronDown } from 'react-icons/fi';
 import { Container, Button, List, Item } from './styles';
 
 interface DropdownMenuProps {
+  name: string;
   items: string[];
-  handleCategoryFilter: any;
+  onChangeItem: (item: string) => void;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  name,
   items,
-  handleCategoryFilter,
+  onChangeItem,
+  ...rest
 }) => {
   const [visible, setVisible] = useState(false);
 
@@ -19,16 +22,16 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   }
 
   return (
-    <Container>
+    <Container {...rest}>
       <Button type="button" onClick={handleToggleVisible}>
-        <strong>Categorias</strong>
+        <strong>{name}</strong>
         <FiChevronDown size={20} />
       </Button>
 
       <List visible={visible}>
         {items.map(item => (
           <Item key={item}>
-            <button type="button" onClick={() => handleCategoryFilter(item)}>
+            <button type="button" onClick={() => onChangeItem(item)}>
               {item}
             </button>
           </Item>
