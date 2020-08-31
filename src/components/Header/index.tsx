@@ -8,7 +8,9 @@ const Header: React.FC = () => {
   return (
     <HeaderWrapper>
       <HeaderContent>
-        <img src={logoImg} alt="CodeHub" />
+        <a href="/">
+          <img src={logoImg} alt="CodeHub" />
+        </a>
       </HeaderContent>
     </HeaderWrapper>
   );
