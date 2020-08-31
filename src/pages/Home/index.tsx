@@ -98,7 +98,11 @@ const Home: React.FC = () => {
     closeEditEventModal();
   }
 
-  function handleDeleteEvent(): void {}
+  function handleDeleteEvent(selectedEvent: Event): void {
+    if (window.confirm('Você tem certeza que quer deletar este evento?')) {
+      setEvents(events.filter(item => item.id !== selectedEvent.id));
+    }
+  }
 
   useEffect(() => {
     api.get<Event[]>('events').then(response => {
@@ -176,7 +180,9 @@ const Home: React.FC = () => {
                     >
                       <FiEdit2 size={13} />
                     </EditEventButton>
-                    <DeleteEventButton onClick={handleDeleteEvent}>
+                    <DeleteEventButton
+                      onClick={() => handleDeleteEvent(eventItem)}
+                    >
                       <FiDelete size={13} />
                     </DeleteEventButton>
                   </EventButtonsWrapper>
