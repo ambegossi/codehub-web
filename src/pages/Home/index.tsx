@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { FiEdit2, FiDelete } from 'react-icons/fi';
+
 import api from '../../services/api';
 
 import DropdownMenu from '../../components/DropdownMenu';
@@ -20,6 +22,9 @@ import {
   EventDate,
   EventMonth,
   EventDescription,
+  EventButtonsWrapper,
+  EditEventButton,
+  DeleteEventButton,
 } from './styles';
 
 export interface Event {
@@ -63,6 +68,10 @@ const Home: React.FC = () => {
     closeModal();
     setEvents(oldEvents => [...oldEvents, event]);
   }
+
+  function handleEditEvent(): void {}
+
+  function handleDeleteEvent(): void {}
 
   useEffect(() => {
     api.get<Event[]>('events').then(response => {
@@ -120,6 +129,15 @@ const Home: React.FC = () => {
                 category === 'Todos' ||
                 !category) && (
                 <Event key={event.title}>
+                  <EventButtonsWrapper>
+                    <EditEventButton onClick={handleEditEvent}>
+                      <FiEdit2 size={13} />
+                    </EditEventButton>
+                    <DeleteEventButton onClick={handleDeleteEvent}>
+                      <FiDelete size={13} />
+                    </DeleteEventButton>
+                  </EventButtonsWrapper>
+
                   <img src={event.image} alt="Evento" />
                   <EventContent>
                     <EventDate>

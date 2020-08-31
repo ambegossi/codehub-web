@@ -72,6 +72,7 @@ export const Event = styled.div<EventProps>`
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   cursor: pointer;
 
   &:hover {
@@ -88,6 +89,7 @@ export const Event = styled.div<EventProps>`
 export const EventContent = styled.div`
   background-color: #fff;
   height: 130px;
+  width: 100%;
   padding: 20px 15px;
   display: flex;
   flex-direction: row;
@@ -118,5 +120,41 @@ export const EventDescription = styled.div`
     margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+`;
+
+export const EventButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+`;
+
+export const EditEventButton = styled.button`
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #7848f4;
+  }
+`;
+
+export const DeleteEventButton = styled.button`
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 10px 0 5px;
+
+  &:hover {
+    background-color: #7848f4;
   }
 `;
