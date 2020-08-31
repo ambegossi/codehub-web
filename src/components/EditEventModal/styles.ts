@@ -12,7 +12,7 @@ export const Container = styled.div`
 
   textarea {
     padding: 16px;
-    border: 1px solid #131315;
+    border: 1px solid #565657;
     color: #2d2d30;
     border-radius: 10px;
   }

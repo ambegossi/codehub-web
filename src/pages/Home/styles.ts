@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import bgIntroImg from '../../assets/bg-intro.jpg';
 
 interface EventProps {
-  key: string;
+  key: number;
 }
 
 export const Intro = styled.div`
@@ -155,6 +155,6 @@ export const DeleteEventButton = styled.button`
   margin: 10px 10px 0 5px;
 
   &:hover {
-    background-color: #7848f4;
+    background-color: #ed3737;
   }
 `;

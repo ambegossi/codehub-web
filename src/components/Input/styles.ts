@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
     flex: 1;
     background: transparent;
     border: 0;
-    color: #131315;
+    color: #2d2d30;
     &::placeholder {
       color: #666360;
     }

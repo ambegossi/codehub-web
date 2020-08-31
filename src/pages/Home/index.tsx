@@ -7,6 +7,7 @@ import api from '../../services/api';
 
 import DropdownMenu from '../../components/DropdownMenu';
 import AddEventModal from '../../components/AddEventModal';
+import EditEventModal from '../../components/EditEventModal';
 
 import {
   Intro,
@@ -28,6 +29,7 @@ import {
 } from './styles';
 
 export interface Event {
+  id: number;
   title: string;
   description: string;
   datetime: string;
@@ -49,27 +51,52 @@ export interface Event {
 const Home: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [category, setCategory] = useState<string>();
-  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [addEventModalIsOpen, setAddEventModalIsOpen] = useState<boolean>(
+    false,
+  );
+  const [editEventModalIsOpen, setEditEventModalIsOpen] = useState<boolean>(
+    false,
+  );
+  const [event, setEvent] = useState<Event>();
 
-  function openModal(): void {
-    setIsOpen(true);
+  function openAddEventModal(): void {
+    setAddEventModalIsOpen(true);
   }
 
-  function closeModal(): void {
-    setIsOpen(false);
+  function closeAddEventModal(): void {
+    setAddEventModalIsOpen(false);
   }
 
-  function handleAddEvent(event: Event): void {
-    const newEvent = event;
-    newEvent.day = format(new Date(event.datetime), 'd');
-    newEvent.month = format(new Date(event.datetime), 'MMM', {
+  function openEditEventModal(): void {
+    setEditEventModalIsOpen(true);
+  }
+
+  function closeEditEventModal(): void {
+    setEditEventModalIsOpen(false);
+  }
+
+  function handleAddEvent(data: Event): void {
+    const newEvent = data;
+    newEvent.id = events.length + 1;
+    newEvent.day = format(new Date(data.datetime), 'd');
+    newEvent.month = format(new Date(data.datetime), 'MMM', {
       locale: ptBR,
     });
-    closeModal();
-    setEvents(oldEvents => [...oldEvents, event]);
+    setEvents(oldEvents => [...oldEvents, newEvent]);
+    closeAddEventModal();
   }
 
-  function handleEditEvent(): void {}
+  function handleEditEvent(data: Event): void {
+    const editedEvent = data;
+    editedEvent.day = format(new Date(data.datetime), 'd');
+    editedEvent.month = format(new Date(data.datetime), 'MMM', {
+      locale: ptBR,
+    });
+    setEvents(
+      events.map(item => (item.id === editedEvent.id ? editedEvent : item)),
+    );
+    closeEditEventModal();
+  }
 
   function handleDeleteEvent(): void {}
 
@@ -102,16 +129,26 @@ const Home: React.FC = () => {
 
       <AddEventModal
         handleAddEvent={handleAddEvent}
-        closeModal={closeModal}
-        onRequestClose={closeModal}
-        modalIsOpen={modalIsOpen}
+        closeModal={closeAddEventModal}
+        onRequestClose={closeAddEventModal}
+        modalIsOpen={addEventModalIsOpen}
       />
+
+      {event && (
+        <EditEventModal
+          selectedEvent={event}
+          handleEditEvent={handleEditEvent}
+          closeModal={closeEditEventModal}
+          onRequestClose={closeEditEventModal}
+          modalIsOpen={editEventModalIsOpen}
+        />
+      )}
 
       <ContentWrapper>
         <CategoryRow>
           <h2>Próximos Eventos</h2>
           <ButtonsWrapper>
-            <AddEventButton onClick={openModal} type="submit">
+            <AddEventButton onClick={openAddEventModal} type="button">
               + Evento
             </AddEventButton>
             <DropdownMenu
@@ -124,13 +161,19 @@ const Home: React.FC = () => {
 
         <Events>
           {events.map(
-            event =>
-              (event.category === category ||
+            eventItem =>
+              (eventItem.category === category ||
                 category === 'Todos' ||
                 !category) && (
-                <Event key={event.title}>
+                <Event key={eventItem.id}>
                   <EventButtonsWrapper>
-                    <EditEventButton onClick={handleEditEvent}>
+                    <EditEventButton
+                      onClick={() => {
+                        setEvent(eventItem);
+                        openEditEventModal();
+                      }}
+                      type="button"
+                    >
                       <FiEdit2 size={13} />
                     </EditEventButton>
                     <DeleteEventButton onClick={handleDeleteEvent}>
@@ -138,15 +181,15 @@ const Home: React.FC = () => {
                     </DeleteEventButton>
                   </EventButtonsWrapper>
 
-                  <img src={event.image} alt="Evento" />
+                  <img src={eventItem.image} alt="Evento" />
                   <EventContent>
                     <EventDate>
-                      <EventMonth>{event.month}</EventMonth>
-                      <strong>{event.day}</strong>
+                      <EventMonth>{eventItem.month}</EventMonth>
+                      <strong>{eventItem.day}</strong>
                     </EventDate>
                     <EventDescription>
-                      <strong>{event.title}</strong>
-                      <p>{event.description}</p>
+                      <strong>{eventItem.title}</strong>
+                      <p>{eventItem.description}</p>
                     </EventDescription>
                   </EventContent>
                 </Event>

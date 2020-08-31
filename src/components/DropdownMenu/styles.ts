@@ -34,6 +34,7 @@ export const List = styled.div<ListProps>`
   border-radius: 10px;
   padding: 15px 5px;
   display: ${props => (props.visible ? 'block' : 'none')};
+  z-index: 100;
 `;
 
 export const Item = styled.div`
