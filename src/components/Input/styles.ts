@@ -25,3 +25,8 @@ export const Container = styled.div<ContainerProps>`
     }
   }
 `;
+
+export const ErrorMessage = styled.p`
+  color: #ed3737;
+  margin-top: 5px;
+`;

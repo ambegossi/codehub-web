@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useField } from '@unform/core';
 
-import { Container } from './styles';
+import { Container, ErrorMessage } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -38,15 +38,18 @@ const Input: React.FC<InputProps> = ({ name, ...rest }) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
-      <input
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        defaultValue={defaultValue}
-        ref={inputRef}
-        {...rest}
-      />
-    </Container>
+    <>
+      <Container isErrored={!!error} isField={isField} isFocused={isFocused}>
+        <input
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          defaultValue={defaultValue}
+          ref={inputRef}
+          {...rest}
+        />
+      </Container>
+      <ErrorMessage>{error}</ErrorMessage>
+    </>
   );
 };
 

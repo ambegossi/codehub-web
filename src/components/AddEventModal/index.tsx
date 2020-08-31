@@ -1,15 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import Modal from 'react-modal';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import * as Yup from 'yup';
 import { formatISO } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import DateTimePicker from '../DateTimePicker';
 import { Event } from '../../pages/Home';
+import DateTimePicker from '../DateTimePicker';
 import DropdownMenu from '../DropdownMenu';
-
 import Input from '../Input';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import {
   Container,
@@ -50,17 +51,43 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
 
   const [category, setCategory] = useState<string>('Presencial');
   const [description, setDescription] = useState<string>('');
-  const [dateTime, setDateTime] = useState<Date | null>(new Date());
+  const [dateTime, setDateTime] = useState<Date>(new Date());
 
-  function handleSubmit(data: any): void {
-    const event = {
-      ...data,
-      category,
-      description,
-      datetime: dateTime ? formatISO(dateTime) : null,
-    };
-    handleAddEvent(event);
-  }
+  const handleSubmit = useCallback(
+    async (data: Event) => {
+      try {
+        formRef.current?.setErrors({});
+
+        const event = {
+          ...data,
+          category,
+          description,
+          datetime: formatISO(dateTime),
+        };
+
+        const schema = Yup.object().shape({
+          title: Yup.string().required('Título obrigatório'),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          image: Yup.string().required('Link da imagem obrigatório'),
+        });
+
+        await schema.validate(event, {
+          abortEarly: false,
+        });
+
+        handleAddEvent(event);
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+        }
+      }
+    },
+    [category, dateTime, description, handleAddEvent],
+  );
 
   function handleChangeDescription(value: string): void {
     setDescription(value);
