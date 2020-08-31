@@ -57,18 +57,21 @@ export const AddEventButton = styled(Button)`
   }
 `;
 
-export const Events = styled.div`
+export const Events = styled.ul`
   margin-top: 30px;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  padding: 0;
+`;
+
+export const EventItem = styled.li`
+  display: flex;
+  padding: 1rem;
 `;
 
 export const Event = styled.div<EventProps>`
-  width: 330px;
   height: 360px;
-  margin: 20px 0;
+  width: 320px;
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
@@ -101,7 +104,6 @@ export const EventDate = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
 `;
 
 export const EventMonth = styled.strong`
@@ -112,7 +114,7 @@ export const EventMonth = styled.strong`
 export const EventDescription = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  margin-left: 20px;
 
   p {
     font-size: 14px;
@@ -120,6 +122,7 @@ export const EventDescription = styled.div`
     margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1 1 auto;
   }
 `;
 

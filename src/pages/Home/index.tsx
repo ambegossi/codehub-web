@@ -18,6 +18,7 @@ import {
   ButtonsWrapper,
   AddEventButton,
   Events,
+  EventItem,
   Event,
   EventContent,
   EventDate,
@@ -169,36 +170,38 @@ const Home: React.FC = () => {
               (eventItem.category === category ||
                 category === 'Todos' ||
                 !category) && (
-                <Event key={eventItem.id}>
-                  <EventButtonsWrapper>
-                    <EditEventButton
-                      onClick={() => {
-                        setEvent(eventItem);
-                        openEditEventModal();
-                      }}
-                      type="button"
-                    >
-                      <FiEdit2 size={13} />
-                    </EditEventButton>
-                    <DeleteEventButton
-                      onClick={() => handleDeleteEvent(eventItem)}
-                    >
-                      <FiDelete size={13} />
-                    </DeleteEventButton>
-                  </EventButtonsWrapper>
+                <EventItem>
+                  <Event key={eventItem.id}>
+                    <EventButtonsWrapper>
+                      <EditEventButton
+                        onClick={() => {
+                          setEvent(eventItem);
+                          openEditEventModal();
+                        }}
+                        type="button"
+                      >
+                        <FiEdit2 size={13} />
+                      </EditEventButton>
+                      <DeleteEventButton
+                        onClick={() => handleDeleteEvent(eventItem)}
+                      >
+                        <FiDelete size={13} />
+                      </DeleteEventButton>
+                    </EventButtonsWrapper>
 
-                  <img src={eventItem.image} alt="Evento" />
-                  <EventContent>
-                    <EventDate>
-                      <EventMonth>{eventItem.month}</EventMonth>
-                      <strong>{eventItem.day}</strong>
-                    </EventDate>
-                    <EventDescription>
-                      <strong>{eventItem.title}</strong>
-                      <p>{eventItem.description}</p>
-                    </EventDescription>
-                  </EventContent>
-                </Event>
+                    <img src={eventItem.image} alt="Evento" />
+                    <EventContent>
+                      <EventDate>
+                        <EventMonth>{eventItem.month}</EventMonth>
+                        <strong>{eventItem.day}</strong>
+                      </EventDate>
+                      <EventDescription>
+                        <strong>{eventItem.title}</strong>
+                        <p>{eventItem.description}</p>
+                      </EventDescription>
+                    </EventContent>
+                  </Event>
+                </EventItem>
               ),
           )}
         </Events>
