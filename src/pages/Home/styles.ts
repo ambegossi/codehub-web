@@ -77,7 +77,6 @@ export const EventCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.05, 1.05);
