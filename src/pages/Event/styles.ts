@@ -18,22 +18,20 @@ export const EventImage = styled.div`
   }
 `;
 
-export const EventTitle = styled.h1`
-  margin-bottom: 35px;
-`;
-
 export const EventContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
   margin-left: 40px;
-`;
 
-export const EventDescription = styled.p`
-  margin-bottom: 20px;
+  p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const EventLink = styled.a`
-  text-decoration: none;
   margin-top: 10px;
+  margin-bottom: 20px;
+  text-decoration: none;
 `;
