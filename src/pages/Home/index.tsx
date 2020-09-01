@@ -19,7 +19,7 @@ import {
   AddEventButton,
   Events,
   EventItem,
-  Event,
+  EventCard,
   EventContent,
   EventDate,
   EventMonth,
@@ -170,8 +170,8 @@ const Home: React.FC = () => {
               (eventItem.category === category ||
                 category === 'Todos' ||
                 !category) && (
-                <EventItem>
-                  <Event key={eventItem.id}>
+                <EventItem key={eventItem.id}>
+                  <EventCard to={`/events/${eventItem.id}`}>
                     <EventButtonsWrapper>
                       <EditEventButton
                         onClick={() => {
@@ -200,7 +200,7 @@ const Home: React.FC = () => {
                         <p>{eventItem.description}</p>
                       </EventDescription>
                     </EventContent>
-                  </Event>
+                  </EventCard>
                 </EventItem>
               ),
           )}

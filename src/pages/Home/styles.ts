@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Button from '../../components/Button';
 
 import bgIntroImg from '../../assets/bg-intro.jpg';
 
-interface EventProps {
+interface EventItemProps {
   key: number;
 }
 
@@ -64,18 +65,19 @@ export const Events = styled.ul`
   padding: 0;
 `;
 
-export const EventItem = styled.li`
+export const EventItem = styled.li<EventItemProps>`
   display: flex;
   padding: 1rem;
 `;
 
-export const Event = styled.div<EventProps>`
+export const EventCard = styled(Link)`
   height: 360px;
   width: 320px;
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  text-decoration: none;
   cursor: pointer;
 
   &:hover {

@@ -7,7 +7,7 @@ import Event from '../pages/Event';
 const Routes: React.FC = () => (
   <Switch>
     <Route path="/" exact component={Home} />
-    <Route path="/event" component={Event} />
+    <Route path="/events/:event+" component={Event} />
   </Switch>
 );
 
