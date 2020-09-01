@@ -70,14 +70,13 @@ export const EventItem = styled.li<EventItemProps>`
   padding: 1rem;
 `;
 
-export const EventCard = styled(Link)`
+export const EventCard = styled.div`
   height: 360px;
   width: 320px;
   transition: transform 0.2s;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  text-decoration: none;
   cursor: pointer;
 
   &:hover {
@@ -91,13 +90,14 @@ export const EventCard = styled(Link)`
   }
 `;
 
-export const EventContent = styled.div`
+export const EventContent = styled(Link)`
   background-color: #fff;
   height: 130px;
   width: 100%;
   padding: 20px 15px;
   display: flex;
   flex-direction: row;
+  text-decoration: none;
   border-radius: 0 0 10px 10px;
 `;
 

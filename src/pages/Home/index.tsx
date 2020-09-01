@@ -171,7 +171,7 @@ const Home: React.FC = () => {
                 category === 'Todos' ||
                 !category) && (
                 <EventItem key={eventItem.id}>
-                  <EventCard to={`/events/${eventItem.id}`}>
+                  <EventCard>
                     <EventButtonsWrapper>
                       <EditEventButton
                         onClick={() => {
@@ -190,7 +190,7 @@ const Home: React.FC = () => {
                     </EventButtonsWrapper>
 
                     <img src={eventItem.image} alt="Evento" />
-                    <EventContent>
+                    <EventContent to={`/events/${eventItem.id}`}>
                       <EventDate>
                         <EventMonth>{eventItem.month}</EventMonth>
                         <strong>{eventItem.day}</strong>
